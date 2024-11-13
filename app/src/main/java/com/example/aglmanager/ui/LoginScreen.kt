@@ -1,5 +1,6 @@
-package com.example.aglmanager
+package com.example.aglmanager.ui
 
+import AGLManagerViewModel // Adjust this path if needed
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -8,12 +9,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.example.aglmanager.AGLManagerScreen
+import com.example.aglmanager.UserStore
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 
 @Composable
-fun LoginScreen(onNavigateBack: () -> Unit) {
+fun LoginScreen(
+    viewModel: AGLManagerViewModel = viewModel(),
+    navController: NavController
+) {
+    val uiState = viewModel.uiState.collectAsState().value
+
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
@@ -60,7 +70,7 @@ fun LoginScreen(onNavigateBack: () -> Unit) {
                 if (username == "admin" && password == "admin") {
                     UserStore.login(username)
                     isError = false
-                    onNavigateBack()
+                    navController.navigate(AGLManagerScreen.Home.name) // Navigate to Home on successful login
                 } else {
                     isError = true
                 }
