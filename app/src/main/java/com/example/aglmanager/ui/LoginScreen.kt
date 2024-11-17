@@ -70,7 +70,7 @@ fun LoginScreen(
                 if (username == "admin" && password == "admin") {
                     UserStore.login(username)
                     isError = false
-                    navController.navigate(AGLManagerScreen.Home.name) // Navigate to Home on successful login
+                    navController.navigate(AGLManagerScreen.Events.name) // Navigate to Home on successful login
                 } else {
                     isError = true
                 }
