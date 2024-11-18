@@ -1,11 +1,13 @@
 package com.example.aglmanager.ui
 
+import AGLManagerViewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,6 +19,8 @@ fun ProfileScreen(
     viewModel: AGLManagerViewModel = viewModel(),
     navController: NavController
 ) {
+    val uiState = viewModel.uiState.collectAsState().value
+
     Column(
         modifier = Modifier
             .fillMaxSize()

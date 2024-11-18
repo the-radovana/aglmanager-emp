@@ -1,12 +1,11 @@
 package com.example.aglmanager.ui
 
 import AGLManagerViewModel
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,12 +20,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.aglmanager.AGLManagerScreen
 
+data class TableRow(val name: String, val location: String)
+
 @Composable
 fun HomeScreen(
     viewModel: AGLManagerViewModel = viewModel(),
     navController: NavController
 ) {
     val uiState = viewModel.uiState.collectAsState().value
+
+    val fakeData = listOf(
+        TableRow("Nogomet", "Stožice"),
+        TableRow("Rokomet",  "Dvorana DIF"),
+        TableRow("Košarka",  "Dvorana DIF"),
+        TableRow("Nogomet #2",  "Stožice")
+    )
 
     Column(
         modifier = Modifier
@@ -36,27 +44,64 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = uiState.message, // Display the message
+            text = uiState.message,
             fontSize = 18.sp,
-            color = Color.Gray
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text = "Hello",
-            fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // Navigate to HistoryScreen
-        Button(onClick = {navController.navigate(AGLManagerScreen.Login.name)}) {
-            Text(text = "Go to login screen")
+
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            item {
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .background(Color.Gray.copy(alpha = 0.2f))
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = "Name",
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = "Location",
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                }
+            }
+
+            items(fakeData) { row ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .background(Color.White)
+                        .border(1.dp, Color.Gray)
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = row.name,
+                        modifier = Modifier.weight(1f),
+                        fontSize = 14.sp
+                    )
+                    Text(
+                        text = row.location,
+                        modifier = Modifier.weight(1f),
+                        fontSize = 14.sp
+                    )
+                }
+            }
         }
+
+        Spacer(modifier = Modifier.height(32.dp))
     }
 }
-
-
-

@@ -25,7 +25,7 @@ fun AGLBottomNavBar(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     Box(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().offset(y = 25.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
         NavigationBar {
@@ -54,7 +54,7 @@ fun AGLBottomNavBar(navController: NavController) {
             onClick = { navController.navigate(AGLManagerScreen.CreateEvent.name) },
             modifier = Modifier
                 .offset(y = (-60).dp)
-                .size(72.dp),
+                .size(64.dp),
             shape = CircleShape,
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,

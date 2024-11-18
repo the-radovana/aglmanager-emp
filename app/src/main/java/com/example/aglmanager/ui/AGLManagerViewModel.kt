@@ -14,9 +14,9 @@ class AGLManagerViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(AGLManagerUIState())
     val uiState: StateFlow<AGLManagerUIState> = _uiState.asStateFlow()
 
-    init {
-        updateMessage("Welcome to AGL Manager")
-    }
+    /*init {
+        updateMessage("Updated Welcome to AGL Manager")
+    }*/
 
 
     fun updateMessage(newMessage: String) {
