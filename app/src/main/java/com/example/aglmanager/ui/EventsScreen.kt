@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.aglmanager.AGLManagerScreen
+import com.example.aglmanager.data.JsonPlaceholder
+import com.example.aglmanager.network.Api
 
 data class TableRow(val name: String, val location: String)
 
@@ -44,7 +46,7 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = uiState.message,
+            text = uiState.todo.title,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
