@@ -31,14 +31,14 @@ fun AGLManagerApp(
 ) {
     Scaffold(
         bottomBar = {
-            if (UserStore.isLoggedIn()) {
+            if (UserStore.isLoggedIn) {
                 AGLBottomNavBar(navController = navController)
             }
         }
     ) { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = if (UserStore.isLoggedIn())
+            startDestination = if (UserStore.isLoggedIn)
                 AGLManagerScreen.Events.name
             else
                 AGLManagerScreen.Login.name,

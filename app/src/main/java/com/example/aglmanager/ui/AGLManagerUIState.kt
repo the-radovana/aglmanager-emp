@@ -1,8 +1,8 @@
 package com.example.aglmanager.ui
 
-import com.example.aglmanager.data.JsonPlaceholder
+import com.example.aglmanager.data.Data
 
 data class AGLManagerUIState(
     val message: String = "Events",
-    val todo: JsonPlaceholder = JsonPlaceholder(1, 1, "test", false)
+    val authenticatedUser: Data? = null,
 )
