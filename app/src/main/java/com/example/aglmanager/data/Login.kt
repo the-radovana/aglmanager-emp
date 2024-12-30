@@ -10,7 +10,7 @@ data class User(
     val phone: String,
     val role: String,
     val createdAt: String,
-    val verifiedAt: String
+    val verifiedAt: String? = null
 )
 
 @Serializable

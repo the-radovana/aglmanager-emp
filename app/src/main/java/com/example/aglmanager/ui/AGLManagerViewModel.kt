@@ -18,22 +18,11 @@ class AGLManagerViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(AGLManagerUIState())
     val uiState: StateFlow<AGLManagerUIState> = _uiState.asStateFlow()
 
-    fun updateMessage(newMessage: String) {
-        _uiState.update { currentState ->
-            currentState.copy(message = newMessage)
-        }
-    }
-
     fun login(email: String, password: String, navController: NavController) {
         viewModelScope.launch {
             try {
                 val login = Api.retrofitService.login(LoginRequest(email, password))
 
-                _uiState.update { currentState ->_uiState.update { currentState ->
-                    currentState.copy(message = login.message)
-                }
-                    currentState.copy(message = login.message)
-                }
                 UserStore.user = login.data.user
                 UserStore.accessToken = login.data.accessToken
                 UserStore.refreshToken = login.data.refreshToken
@@ -49,6 +38,36 @@ class AGLManagerViewModel : ViewModel() {
                     val errorBody = e.response()?.errorBody()?.string()
                     Log.e("AGLManagerViewModel", "Error body: $errorBody")
                 }
+            }
+        }
+    }
+
+    fun getEvents() {
+        if (!UserStore.isLoggedIn) return
+        
+        viewModelScope.launch {
+            try {
+                val response = Api.retrofitService.getEvents()
+                _uiState.update { currentState ->
+                    currentState.copy(events = response.data)
+                }
+            } catch (e: Exception) {
+                Log.e("AGLManagerViewModel", "Failed to fetch events: ${e.message}", e)
+            }
+        }
+    }
+
+    fun getEventDetails(eventId: Int) {
+        if (!UserStore.isLoggedIn) return
+
+        viewModelScope.launch {
+            try {
+                val response = Api.retrofitService.getEventDetails(eventId)
+                _uiState.update { currentState ->
+                    currentState.copy(selectedEvent = response.data)
+                }
+            } catch (e: Exception) {
+                Log.e("AGLManagerViewModel", "Failed to fetch event details: ${e.message}", e)
             }
         }
     }

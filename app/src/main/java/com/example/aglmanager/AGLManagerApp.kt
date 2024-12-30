@@ -1,6 +1,5 @@
 package com.example.aglmanager
 
-import AGLManagerViewModel
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -8,20 +7,17 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.aglmanager.ui.LoginScreen
-import com.example.aglmanager.ui.HomeScreen
+import com.example.aglmanager.ui.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.aglmanager.ui.CreateEventScreen
-import com.example.aglmanager.ui.ProfileScreen
 import com.example.aglmanager.ui.components.AGLBottomNavBar
-
 
 enum class AGLManagerScreen(val title: String) {
     Events("Events"),
     CreateEvent("Create Event"),
     Profile("Profile"),
     Login("Login"),
+    EventDetails("Event Details")
 }
 
 @Composable
@@ -55,6 +51,10 @@ fun AGLManagerApp(
             }
             composable(route = AGLManagerScreen.Profile.name) {
                 ProfileScreen(viewModel = viewModel, navController = navController)
+            }
+            composable(route = "${AGLManagerScreen.EventDetails.name}/{eventId}") { backStackEntry ->
+                val eventId = backStackEntry.arguments?.getString("eventId")?.toInt() ?: 0
+                EventDetailsScreen(eventId = eventId, viewModel = viewModel, navController = navController)
             }
         }
     }

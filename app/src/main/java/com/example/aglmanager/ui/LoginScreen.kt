@@ -1,6 +1,5 @@
 package com.example.aglmanager.ui
 
-import AGLManagerViewModel // Adjust this path if needed
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,7 +20,6 @@ import androidx.compose.material.icons.filled.VisibilityOff
 fun LoginScreen(viewModel: AGLManagerViewModel, navController: NavController) {
     var username by remember { mutableStateOf("gal.podlipnik@gmail.com") }
     var password by remember { mutableStateOf("Osemcrk1") }
-    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -52,6 +50,5 @@ fun LoginScreen(viewModel: AGLManagerViewModel, navController: NavController) {
             Text("Login")
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = uiState.message)
     }
 }
