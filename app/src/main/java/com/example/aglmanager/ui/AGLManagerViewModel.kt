@@ -28,7 +28,7 @@ class AGLManagerViewModel : ViewModel() {
                 UserStore.refreshToken = login.data.refreshToken
                 UserStore.accessTokenExp = login.data.accessTokenExp
                 UserStore.refreshTokenExp = login.data.refreshTokenExp
-                UserStore.isLoggedIn = true
+                UserStore.setLoggedIn(true)
 
                 navController.navigate(AGLManagerScreen.Events.name);
                 
@@ -43,7 +43,7 @@ class AGLManagerViewModel : ViewModel() {
     }
 
     fun getEvents() {
-        if (!UserStore.isLoggedIn) return
+        if (!UserStore.getIsLoggedIn()) return
         
         viewModelScope.launch {
             try {
@@ -58,7 +58,7 @@ class AGLManagerViewModel : ViewModel() {
     }
 
     fun getEventDetails(eventId: Int) {
-        if (!UserStore.isLoggedIn) return
+        if (!UserStore.getIsLoggedIn()) return
 
         viewModelScope.launch {
             try {

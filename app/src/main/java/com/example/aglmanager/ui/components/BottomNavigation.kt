@@ -25,9 +25,9 @@ fun AGLBottomNavBar(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination?.route
 
     Box(
-        modifier = Modifier.fillMaxWidth().offset(y = 25.dp),
+        modifier = Modifier.fillMaxWidth(),
         contentAlignment = Alignment.BottomCenter
-    ) {
+    ){
         NavigationBar {
             NavigationBarItem(
                 icon = { Icon(Icons.Filled.CalendarMonth, contentDescription = "Home") },
@@ -35,7 +35,6 @@ fun AGLBottomNavBar(navController: NavController) {
                 selected = currentRoute == AGLManagerScreen.Events.name,
                 onClick = { navController.navigate(AGLManagerScreen.Events.name) }
             )
-            // Empty center item to create space for FAB
             NavigationBarItem(
                 icon = { },
                 label = { },

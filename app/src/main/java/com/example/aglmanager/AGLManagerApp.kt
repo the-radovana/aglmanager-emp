@@ -1,8 +1,9 @@
 package com.example.aglmanager
 
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,16 +26,10 @@ fun AGLManagerApp(
     viewModel: AGLManagerViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
-    Scaffold(
-        bottomBar = {
-            if (UserStore.isLoggedIn) {
-                AGLBottomNavBar(navController = navController)
-            }
-        }
-    ) { paddingValues ->
+    Scaffold() { paddingValues ->
         NavHost(
             navController = navController,
-            startDestination = if (UserStore.isLoggedIn)
+            startDestination = if (UserStore.getIsLoggedIn())
                 AGLManagerScreen.Events.name
             else
                 AGLManagerScreen.Login.name,
@@ -49,12 +44,11 @@ fun AGLManagerApp(
             composable(route = AGLManagerScreen.CreateEvent.name) {
                 CreateEventScreen(viewModel = viewModel, navController = navController)
             }
-            composable(route = AGLManagerScreen.Profile.name) {
-                ProfileScreen(viewModel = viewModel, navController = navController)
-            }
-            composable(route = "${AGLManagerScreen.EventDetails.name}/{eventId}") { backStackEntry ->
-                val eventId = backStackEntry.arguments?.getString("eventId")?.toInt() ?: 0
-                EventDetailsScreen(eventId = eventId, viewModel = viewModel, navController = navController)
+            composable("${AGLManagerScreen.EventDetails.name}/{eventId}") { backStackEntry ->
+                val eventId = backStackEntry.arguments?.getString("eventId")?.toIntOrNull()
+                eventId?.let {
+                    EventDetailsScreen(eventId, navController = navController)
+                }
             }
         }
     }
