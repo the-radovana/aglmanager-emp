@@ -9,6 +9,8 @@ import com.example.aglmanager.ui.theme.AGLManagerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SharedPreferencesManager.init(this)
+        UserStore.loadFromPreferences()
         enableEdgeToEdge()
         setContent {
             AGLManagerTheme {

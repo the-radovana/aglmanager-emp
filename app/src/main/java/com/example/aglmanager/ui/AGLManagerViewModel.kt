@@ -3,6 +3,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.aglmanager.AGLManagerScreen
+import com.example.aglmanager.SharedPreferencesManager
 import com.example.aglmanager.UserStore
 import com.example.aglmanager.data.LoginRequest
 import com.example.aglmanager.network.Api
@@ -29,8 +30,9 @@ class AGLManagerViewModel : ViewModel() {
                 UserStore.accessTokenExp = login.data.accessTokenExp
                 UserStore.refreshTokenExp = login.data.refreshTokenExp
                 UserStore.setLoggedIn(true)
+                UserStore.saveToPreferences()
 
-                navController.navigate(AGLManagerScreen.Events.name);
+                navController.navigate(AGLManagerScreen.Events.name)
                 
             } catch (e: Exception) {
                 Log.e("AGLManagerViewModel", "Login failed: ${e.message}", e)
